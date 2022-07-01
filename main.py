@@ -1,6 +1,5 @@
 from random import randrange
 
-
 def minus(r, n):
     nums = []
 
@@ -37,21 +36,48 @@ def add(r, n):
 
     for i in range(n):
         nums.append(randrange(1, r))
-        answer -= nums[i]
+        answer += nums[i]
 
         if i == n - 1:
             print(f"{nums[i]} = ?")
             continue
         print(f"{nums[i]} + ", end = '')
 
-    i = input("Your Response:  ")
+    i = input("Your Response: ")
 
-    if int(i) == abs(answer):
+    if int(i) == answer:
         print("Correct")
         return
 
     print("Wrong...")
     print(f"Actual Answer: {answer}")
+
+
+def parseFunction(i):
+    nameChars = []
+    args = []
+    x = 0
+
+    while i[x] != "(":
+        nameChars.append(i[x])
+        x += 1
+    x += 1
+
+    while i[x] != ")":
+        if i[x] != "," and i[x] != " ":
+            args.append(i[x])
+        x += 1
+
+    name = ''.join(nameChars)
+
+    if name == "add":
+        add(int(args[0]), int(args[1]))
+    elif name == "minus":
+        minus(int(args[0]), int(args[1]))
+    else:
+        print(f"Function Name: {name}")
+        print(f"Function Args: {args}")
+
 
 def help():
     print(" All The Available Commands:  ")
@@ -64,9 +90,11 @@ def help():
 
 def main():
     while True:
-        i = input("math> ").lower()
+        i = input("math> ").lower().strip()
 
-        if i == "add" or i == "+":
+        if i[-1] == ")":
+            parseFunction(i)
+        elif i == "add" or i == "+":
             add(10, 3)
         elif i == "minus" or i == "-":
             minus(10, 3)
