@@ -1,60 +1,44 @@
 from random import randrange
 
-def minus(r, n):
-    nums = []
 
-    for i in range(n):
-        nums.append(randrange(1, r))
+def add(args) -> int:
+    if len(args) == 1:
+        print("Invalid Use Of Add Function: Both Range And Amount Of Numbers Must Be Greater Than 1")
+        return 1
 
-        if i != n - 1:
-            print(f"{nums[i]} - ", end = '')
-        else:
-            print(f"{nums[i]} = ?")
+    result = 0
 
-    answer = nums[0]
+    for i in args:
+        result += int(i)
+
+    print(f"Result: {result}")
+    return result
+
+
+def minus(args) -> int:
+    if len(args) == 1:
+        print("Invalid use of minus: expected more than one argument")
+
+    answer = int(args[0])
+
     i = 1
 
-    while i < n - 1:
-        answer -= nums[i]
+    while i < len(args):
+        answer -= int(args[i])
         i += 1
 
-    answer -= nums[-1]
-
-    i = input("Your Response: ")
-
-    if int(i) == answer:
-        print("Correct")
-        return
-
-    print("Wrong...")
-    print(f"Actual Answer: {answer}")
+    print(f"Result: {answer}")
+    return answer
 
 
-def add(r, n):
-    if n == 1 or r == 1:
-        print("Invalid Use Of Add Function: Both Range And Amount Of Numbers Must Be Greater Than 1")
-        return
-
-    nums = []
-    answer = 0
-
-    for i in range(n):
-        nums.append(randrange(1, r))
-        answer += nums[i]
-
-        if i == n - 1:
-            print(f"{nums[i]} = ?")
-            continue
-        print(f"{nums[i]} + ", end = '')
-
-    i = input("Your Response: ")
-
-    if int(i) == answer:
-        print("Correct")
-        return
-
-    print("Wrong...")
-    print(f"Actual Answer: {answer}")
+def callFunction(name, args):
+    if name == "add":
+        add(args)
+    elif name == "minus":
+        minus(args)
+    else:
+        print(f"Function Name: {name}")
+        print(f"Function Args: {args}")
 
 
 def parseFunction(i):
@@ -79,13 +63,8 @@ def parseFunction(i):
         args.append(''.join(arg))
         x += 1
 
-    if name == "add":
-        add(int(args[0]), int(args[1]))
-    elif name == "minus":
-        minus(int(args[0]), int(args[1]))
-    else:
-        print(f"Function Name: {name}")
-        print(f"Function Args: {args}")
+
+    callFunction(name, args)
 
 
 def main():
