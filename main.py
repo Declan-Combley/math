@@ -1,15 +1,40 @@
 from random import randrange
 
+variables = {}
+
+def showVariable(i):
+    print(f"{i[1]} = {variables[i[1]]}")
+
+
+def parseVariable(i) -> str:
+    x = 2
+    values = []
+
+    while x < len(i):
+        values.append(i[x])
+        x += 1
+
+    result = ''.join(values)
+
+    return result
+
 
 def add(args) -> int:
     if len(args) == 1:
         print("Invalid Use Of Add Function: Both Range And Amount Of Numbers Must Be Greater Than 1")
         return 1
 
+    x = 0
     result = 0
 
     for i in args:
-        result += int(i)
+        try:
+            result += int(i)
+        except:
+            result += int(variables[args[x]])
+        finally:
+            print(x)
+            x += 1
 
     print(f"Result: {result}")
     return result
@@ -19,16 +44,26 @@ def minus(args) -> int:
     if len(args) == 1:
         print("Invalid use of minus: expected more than one argument")
 
-    answer = int(args[0])
+    result = None
+    x = 0
 
-    i = 1
+    try:
+        result = int(args[0])
+    except:
+        result = int(variables[args[x]])
 
-    while i < len(args):
-        answer -= int(args[i])
-        i += 1
+    args.pop(0)
 
-    print(f"Result: {answer}")
-    return answer
+    for i in args:
+        try:
+            result -= int(i)
+        except:
+            result -= int(variables[args[x]])
+        finally:
+                x += 1
+
+    print(f"Result: {result}")
+    return result
 
 
 def callFunction(name, args):
@@ -63,7 +98,6 @@ def parseFunction(i):
         args.append(''.join(arg))
         x += 1
 
-
     callFunction(name, args)
 
 
@@ -71,12 +105,14 @@ def main():
     while True:
         i = input("math> ").lower().strip().replace(" ", "")
 
-        if i[-1] == ")":
+        if "=" in i:
+            variables.update({i[0] : parseVariable(i)})
+        elif "(" in i and ")" in i:
             parseFunction(i)
-        elif i == "add" or i == "+":
-            add(10, 3)
-        elif i == "minus" or i == "-":
-            minus(10, 3)
+        elif i[0] == ":":
+            showVariable(i)
+        elif "show" in i and "." in i:
+            print(variables)
         elif i == "quit" or i == "q":
             return
         else:
