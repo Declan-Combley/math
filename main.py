@@ -6,10 +6,10 @@ def minus(r, n):
     for i in range(n):
         nums.append(randrange(1, r))
 
-        if i == n - 1:
+        if i != n - 1:
+            print(f"{nums[i]} - ", end = '')
+        else:
             print(f"{nums[i]} = ?")
-            continue
-        print(f"{nums[i]} - ", end = '')
 
     answer = nums[0]
     i = 1
@@ -31,6 +31,10 @@ def minus(r, n):
 
 
 def add(r, n):
+    if n == 1 or r == 1:
+        print("Invalid Use Of Add Function: Both Range And Amount Of Numbers Must Be Greater Than 1")
+        return
+
     nums = []
     answer = 0
 
@@ -56,6 +60,7 @@ def add(r, n):
 def parseFunction(i):
     nameChars = []
     args = []
+
     x = 0
 
     while i[x] != "(":
@@ -63,12 +68,16 @@ def parseFunction(i):
         x += 1
     x += 1
 
-    while i[x] != ")":
-        if i[x] != "," and i[x] != " ":
-            args.append(i[x])
-        x += 1
-
     name = ''.join(nameChars)
+
+    while x < len(i) - 1:
+        arg = []
+
+        while i[x] != "," and x < len(i) - 1:
+            arg.append(i[x])
+            x += 1
+        args.append(''.join(arg))
+        x += 1
 
     if name == "add":
         add(int(args[0]), int(args[1]))
@@ -79,18 +88,9 @@ def parseFunction(i):
         print(f"Function Args: {args}")
 
 
-def help():
-    print(" All The Available Commands:  ")
-    print(" +---------------------------+")
-    print(" | quit,  q  > exit          |")
-    print(" | add,   +  > addition game |")
-    print(" | minus, -  > addition game |")
-    print(" +---------------------------+")
-
-
 def main():
     while True:
-        i = input("math> ").lower().strip()
+        i = input("math> ").lower().strip().replace(" ", "")
 
         if i[-1] == ")":
             parseFunction(i)
@@ -100,15 +100,9 @@ def main():
             minus(10, 3)
         elif i == "quit" or i == "q":
             return
-        elif i == "help":
-            help()
         else:
-            print("Invalid Input: Expected One Of The Following Commands")
-            print(" +--------------------------------------------------+")
-            print(" | quit,  q  > exit                                 |")
-            print(" | add,   +  > addition game                        |")
-            print(" | minus, -  > addition game                        |")
-            print(" +--------------------------------------------------+")
+            print("Invalid Input")
+
 
 if __name__ == '__main__':
     main()
