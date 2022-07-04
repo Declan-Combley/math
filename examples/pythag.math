@@ -1,0 +1,7 @@
+a = square(2)
+b = square(2)
+c = add(a, b)
+c = sqrt(c)
+:c
+
+print done

@@ -1,0 +1,9 @@
+p = 100
+r = 3
+t = 4
+
+i = times(p, r, t)
+i = divide(i, 100)
+:i
+
+print done
