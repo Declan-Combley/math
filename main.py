@@ -6,19 +6,6 @@ def showVariable(i):
     print(f"{i[1]} = {variables[i[1]]}")
 
 
-def parseVariable(i) -> str:
-    x = 2
-    values = []
-
-    while x < len(i):
-        values.append(i[x])
-        x += 1
-
-    result = ''.join(values)
-
-    return result
-
-
 def add(args) -> int:
     if len(args) == 1:
         print("Invalid Use Of Add Function: Both Range And Amount Of Numbers Must Be Greater Than 1")
@@ -33,7 +20,6 @@ def add(args) -> int:
         except:
             result += int(variables[args[x]])
         finally:
-            print(x)
             x += 1
 
     print(f"Result: {result}")
@@ -44,15 +30,15 @@ def minus(args) -> int:
     if len(args) == 1:
         print("Invalid use of minus: expected more than one argument")
 
-    result = None
+    result = 0
     x = 0
 
     try:
         result = int(args[0])
     except:
         result = int(variables[args[x]])
-
-    args.pop(0)
+    finally:
+        args.pop(0)
 
     for i in args:
         try:
@@ -60,55 +46,74 @@ def minus(args) -> int:
         except:
             result -= int(variables[args[x]])
         finally:
-                x += 1
+            x += 1
 
     print(f"Result: {result}")
     return result
 
 
 def callFunction(name, args):
-    if name == "add":
-        add(args)
+    result = None
+
+    if "add" in name:
+        result = add(args)
     elif name == "minus":
-        minus(args)
+        result = minus(args)
     else:
-        print(f"Function Name: {name}")
+        print(f"Unknown Function : {name}")
         print(f"Function Args: {args}")
 
+    return result
 
-def parseFunction(i):
-    nameChars = []
-    args = []
+class parse:
+    def function(i):
+        nameChars = []
+        args = []
 
-    x = 0
+        x = 0
 
-    while i[x] != "(":
-        nameChars.append(i[x])
-        x += 1
-    x += 1
-
-    name = ''.join(nameChars)
-
-    while x < len(i) - 1:
-        arg = []
-
-        while i[x] != "," and x < len(i) - 1:
-            arg.append(i[x])
+        while i[x] != "(":
+            nameChars.append(i[x])
             x += 1
-        args.append(''.join(arg))
         x += 1
 
-    callFunction(name, args)
+        name = ''.join(nameChars)
+
+        while x < len(i) - 1:
+            arg = []
+
+            while i[x] != "," and x < len(i) - 1:
+                arg.append(i[x])
+                x += 1
+            args.append(''.join(arg))
+            x += 1
+
+        return callFunction(name, args)
+
+    def variable(i) -> str:
+        x = 2
+        values = []
+
+        while x < len(i):
+            values.append(i[x])
+            x += 1
+
+        result = ''.join(values)
+
+        return result
 
 
 def main():
     while True:
         i = input("math> ").lower().strip().replace(" ", "")
 
-        if "=" in i:
-            variables.update({i[0] : parseVariable(i)})
+        if "=" in i and "(" in i and ")" in i:
+            result = parse.function(i[2:])
+            variables[i[0]] = result
+        elif "=" in i:
+            variables.update({i[0] : parse.variable(i)})
         elif "(" in i and ")" in i:
-            parseFunction(i)
+            parse.function(i)
         elif i[0] == ":":
             showVariable(i)
         elif "show" in i and "." in i:
