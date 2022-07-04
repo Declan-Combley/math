@@ -1,7 +1,41 @@
 from random import randrange
+from math import sqrt
 from sys import argv
 
 variables = {}
+
+def squareRoot(args):
+    if len(args) != 1:
+        print("Error: sqrt only accepts 1 argument")
+
+    try:
+        value = int(args[0])
+    except ValueError:
+        try:
+            value = float(variables[args[0]])
+        except:
+            value = float(variables[args[0]])
+    except:
+        value = float(variables[args[0]])
+
+    return sqrt(value)
+
+
+def square(args):
+    if len(args) != 1:
+        print("Error: square only accepts 1 argument")
+    try:
+        value = int(args[0])
+    except ValueError:
+        try:
+            value = float(variables[args[0]])
+        except:
+            value = float(variables[args[0]])
+    except:
+        value = float(variables[args[0]])
+
+    return value * value
+
 
 def showVariable(i):
     value = str(variables[i[1]])
@@ -14,7 +48,6 @@ def showVariable(i):
 
         if value[x] == "0":
             print(f"{i[1]} = {int(variables[i[1]])}")
-            print(x)
             return
 
     print(f"{i[1]} = {variables[i[1]]}")
@@ -125,7 +158,7 @@ def divide(args) -> int or float:
         try:
             result = float(variables[args[x]])
         except:
-            result = float(i)
+            result = float(args[0])
     except:
         result = float(variables[args[x]])
     finally:
@@ -161,11 +194,16 @@ def callFunction(name, args):
         result = times(args)
     elif name == "divide":
         result = divide(args)
+    elif name == "sqrt":
+        result = squareRoot(args)
+    elif name == "square":
+        result = square(args)
     else:
         print(f"Unknown Function : {name}")
         print(f"Function Args: {args}")
 
     return result
+
 
 class parse:
     def function(i):
@@ -260,8 +298,6 @@ def f(filePath):
             parse.function(i)
         elif ":" in i:
             showVariable(i)
-        elif "show" in i and "." in i:
-            print(variables)
         elif i == "quit" or i == "q":
             return
         else:
