@@ -1,12 +1,26 @@
 from random import randrange
+from sys import argv
 
 variables = {}
 
 def showVariable(i):
+    value = str(variables[i[1]])
+    x = 0
+
+    if "." in value:
+        while value[x] != ".":
+            x += 1
+        x += 1
+
+        if value[x] == "0":
+            print(f"{i[1]} = {int(variables[i[1]])}")
+            print(x)
+            return
+
     print(f"{i[1]} = {variables[i[1]]}")
 
 
-def add(args) -> int:
+def add(args) -> int or float:
     if len(args) == 1:
         print("Invalid Use Of Add Function: Both Range And Amount Of Numbers Must Be Greater Than 1")
         return 1
@@ -17,16 +31,20 @@ def add(args) -> int:
     for i in args:
         try:
             result += int(i)
+        except ValueError:
+            try:
+                result += float(variables[args[x]])
+            except:
+                result += float(i)
         except:
-            result += int(variables[args[x]])
-        finally:
-            x += 1
+            result += float(variables[args[x]])
 
-    print(f"Result: {result}")
+        x += 1
+
     return result
 
 
-def minus(args) -> int:
+def minus(args) -> int or float:
     if len(args) == 1:
         print("Invalid use of minus: expected more than one argument")
 
@@ -35,30 +53,114 @@ def minus(args) -> int:
 
     try:
         result = int(args[0])
+    except ValueError:
+        try:
+            result = float(variables[args[x]])
+        except:
+            result = float(i)
     except:
-        result = int(variables[args[x]])
+        result = float(variables[args[x]])
     finally:
         args.pop(0)
 
     for i in args:
         try:
             result -= int(i)
+        except ValueError:
+            try:
+                result -= float(variables[args[x]])
+            except:
+                result -= float(i)
         except:
-            result -= int(variables[args[x]])
-        finally:
-            x += 1
+            result -= float(variables[args[x]])
+        x += 1
 
-    print(f"Result: {result}")
     return result
+
+
+def times(args) -> int or float:
+    if len(args) == 1:
+        print("Invalid use of minus: expected more than one argument")
+
+    result = 0
+    x = 0
+
+    try:
+        result = int(args[0])
+    except ValueError:
+        try:
+            result = float(variables[args[x]])
+        except:
+            result = float(i)
+    except:
+        result = float(variables[args[x]])
+    finally:
+        args.pop(0)
+
+    for i in args:
+        try:
+            result *= int(i)
+        except ValueError:
+            try:
+                result *= float(variables[args[x]])
+            except:
+                result *= float(i)
+        except:
+            result *= float(variables[args[x]])
+        x += 1
+
+    return result
+
+
+def divide(args) -> int or float:
+    if len(args) == 1:
+        print("Invalid use of minus: expected more than one argument")
+
+    result = 0
+    x = 0
+
+    try:
+        result = int(args[0])
+    except ValueError:
+        try:
+            result = float(variables[args[x]])
+        except:
+            result = float(i)
+    except:
+        result = float(variables[args[x]])
+    finally:
+        args.pop(0)
+
+    for i in args:
+        try:
+            result /= int(i)
+        except ValueError:
+            try:
+                result /= float(variables[args[x]])
+            except:
+                result /= float(i)
+        except:
+            result /= float(variables[args[x]])
+        x += 1
+
+    return result
+
+
+def display(args):
+    print(args)
 
 
 def callFunction(name, args):
     result = None
 
-    if "add" in name:
+    if name == "add":
         result = add(args)
     elif name == "minus":
         result = minus(args)
+    elif name == "times":
+        result = times(args)
+    elif name == "divide":
+        result = divide(args)
     else:
         print(f"Unknown Function : {name}")
         print(f"Function Args: {args}")
@@ -96,6 +198,7 @@ class parse:
 
         while x < len(i):
             values.append(i[x])
+
             x += 1
 
         result = ''.join(values)
@@ -103,7 +206,7 @@ class parse:
         return result
 
 
-def main():
+def shell():
     while True:
         i = input("math> ").lower().strip().replace(" ", "")
 
@@ -124,7 +227,57 @@ def main():
             print("Invalid Input")
 
 
+def f(filePath):
+    if ".math" not in filePath:
+        print(f"Error: {filePath} is not a .math file")
+        exit(1)
+
+    parsedLines = []
+    unparsedLines = []
+
+    try:
+        f = open(filePath, "r")
+        for i in f:
+            parsedLines.append(i.removesuffix("\n").strip().replace(" ", ""))
+            unparsedLines.append(i.removesuffix("\n"))
+    except:
+        print(f"Error: {filePath} does not exist")
+        exit(1)
+
+    x = 0
+
+    for i in parsedLines:
+        if "#" in i  or i == "":
+            pass
+        elif "print" in i:
+            print(unparsedLines[x][6:])
+        elif "=" in i and "(" in i and ")" in i:
+            result = parse.function(i[2:])
+            variables[i[0]] = result
+        elif "=" in i:
+            variables.update({i[0] : parse.variable(i)})
+        elif "(" in i and ")" in i:
+            parse.function(i)
+        elif ":" in i:
+            showVariable(i)
+        elif "show" in i and "." in i:
+            print(variables)
+        elif i == "quit" or i == "q":
+            return
+        else:
+            print(f"Invalid Input: At Line {x + 1}")
+            exit(1)
+        x += 1
+
+    f.close()
+
+
 if __name__ == '__main__':
-    main()
+    argc = len(argv)
+
+    if argc == 1:
+        shell()
+    else:
+        f(argv[1])
 else:
     print("Something went wrong make sure that this is the only python file")
