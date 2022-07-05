@@ -304,8 +304,6 @@ def shell():
 
         if "#" in i  or i == "":
             pass
-        elif "print" in i:
-            print(unparsedLines[x][6:])
         elif "=" in i and "(" in i and ")" in i:
             parse.function(i)
         elif "=" in i:
@@ -321,8 +319,7 @@ def shell():
         elif i == "quit" or i == "q":
             return
         else:
-            print(f"Invalid Input: At Line {x + 1}")
-            exit(1)
+            print(f"Error: Invalid Input")
 
 
 def f(filePath):
