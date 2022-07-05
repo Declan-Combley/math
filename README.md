@@ -1,10 +1,16 @@
 # Math
 
-A simple math language written in python because i'm to brain-dead to use C, and i'm failing maths.
+A simple math language written in python because i'm too brain-dead to use C, and i'm failing maths.
 
 ## Quickstart
+To open a shell run this
 ```shell
 $ ./run.sh
+```
+
+Run a file like this
+```
+$ python3 main.py <file path>
 ```
 
 ## Keywords
@@ -28,3 +34,7 @@ squareRoot(...)    - Will return the square root of a singular value
 ## Examples
 
 If you want some examples of how to use this language check out the <a href="https://github.com/Declan-Combley/math/tree/main/examples">example folder</a>.
+
+## Forewarning
+This language is a work in process and there is little to no error checking.
+So expect to see alot of python errors if you don't do exactly what the language asks in right way.
