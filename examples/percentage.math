@@ -1,0 +1,14 @@
+print total value
+total_value = ?
+
+print value
+value = ?
+
+percent = divide(value, total_value)
+percent = times(percent, 100)
+
+clear
+
+:percent
+
+print done
