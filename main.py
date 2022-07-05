@@ -290,7 +290,9 @@ def showVariable(i):
 
         if value[x] == "0":
             print(f"{name} = {int(variables.get(name))}")
-            return
+        else:
+            print(f"{name} = {float(variables.get(name))}")
+        return
 
     try:
         print(f"{name} = {variables.get(name)}")
