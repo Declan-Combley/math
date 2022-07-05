@@ -214,11 +214,27 @@ def callFunction(name, args):
 
 
 class parse:
+    def varName(i):
+        name = []
+
+        x = 0
+
+        while i[x] != "=":
+            name.append(i[x])
+            x += 1
+
+        return ''.join(name)
+
+
     def function(i):
         nameChars = []
         args = []
 
         x = 0
+
+        while i[x] != "=":
+            x += 1
+        x += 1
 
         while i[x] != "(":
             nameChars.append(i[x])
@@ -236,27 +252,38 @@ class parse:
             args.append(''.join(arg))
             x += 1
 
-        return callFunction(name, args)
+        value = callFunction(name, args)
+        variableName = parse.varName(i)
+
+        variables.update({variableName : value})
+
 
     def variable(i) -> str:
         if len(i) < 1:
             print("Error: Invalid Variable Value")
 
-        if i[-1] == "?":
-            value = input(">  ")
-            return value
-
-        x = 2
+        name = []
         values = []
+
+        x = 0
+
+        while i[x] != "=":
+            name.append(i[x])
+            x += 1
+        x += 1
 
         while x < len(i):
             values.append(i[x])
 
             x += 1
 
+        name = ''.join(name)
         result = ''.join(values)
 
-        return result
+        if result == "?":
+            result = input(" > ")
+
+        variables.update({name : result})
 
 
 def shell():
@@ -305,14 +332,15 @@ def f(filePath):
         elif "print" in i:
             print(unparsedLines[x][6:])
         elif "=" in i and "(" in i and ")" in i:
-            result = parse.function(i[2:])
-            variables[i[0]] = result
+            parse.function(i)
         elif "=" in i:
-            variables.update({i[0] : parse.variable(i)})
+            parse.variable(i)
         elif "(" in i and ")" in i:
             parse.function(i)
         elif ":" in i:
             showVariable(i)
+        elif "show" in i and "." in i:
+            print(variables)
         elif i == "clear":
             clear()
         elif i == "quit" or i == "q":
