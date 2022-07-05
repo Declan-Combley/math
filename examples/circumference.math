@@ -1,0 +1,11 @@
+print radius
+r = ?
+
+pi = 3.14
+cirumference = times(2, pi, r)
+
+clear
+:cirumference
+
+print done
+
