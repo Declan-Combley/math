@@ -1,6 +1,6 @@
 # Math
 
-A simple math language written in python because i'm to braindead to use C, and falinng maths.
+A simple math language written in python because i'm to brain-dead to use C, and i'm failing maths.
 
 ## Quickstart
 ```shell
@@ -11,6 +11,7 @@ $ ./run.sh
 ```
 <var> = <value>    - Will create a variable with the value of a number
 <var> = <function> - Will create a variable with the value of a function
+print <text>       - Will print out any text past the print word
 :<var>             - Will print out the value of the variable
 ```
 
