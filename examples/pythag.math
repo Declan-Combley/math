@@ -4,6 +4,8 @@ a = ?
 print b
 b = ?
 
+clear
+
 a = square(a)
 b = square(b)
 c = add(a, b)

@@ -1,8 +1,16 @@
 from random import randrange
+from os import system, name
 from math import sqrt
 from sys import argv
 
 variables = {}
+
+def clear():
+    if name == 'nt':
+        _ = system('cls')
+    else:
+        _ = system('clear')
+
 
 def squareRoot(args):
     if len(args) != 1:
@@ -305,6 +313,8 @@ def f(filePath):
             parse.function(i)
         elif ":" in i:
             showVariable(i)
+        elif i == "clear":
+            clear()
         elif i == "quit" or i == "q":
             return
         else:

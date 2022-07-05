@@ -7,6 +7,8 @@ r = ?
 print time
 t = ?
 
+clear
+
 i = times(p, r, t)
 i = divide(i, 100)
 
