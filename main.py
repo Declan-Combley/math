@@ -44,23 +44,6 @@ def square(args):
 
     return value * value
 
-
-def showVariable(i):
-    value = str(variables[i[1]])
-    x = 0
-
-    if "." in value:
-        while value[x] != ".":
-            x += 1
-        x += 1
-
-        if value[x] == "0":
-            print(f"{i[1]} = {int(variables[i[1]])}")
-            return
-
-    print(f"{i[1]} = {variables[i[1]]}")
-
-
 def add(args) -> int or float:
     if len(args) == 1:
         print("Invalid Use Of Add Function: Both Range And Amount Of Numbers Must Be Greater Than 1")
@@ -219,7 +202,16 @@ class parse:
 
         x = 0
 
-        while i[x] != "=":
+        if "=" in i:
+            while i[x] != "=":
+                name.append(i[x])
+                x += 1
+            return ''.join(name)
+
+        if ":" in i:
+            x += 1
+
+        while x < len(i):
             name.append(i[x])
             x += 1
 
@@ -286,25 +278,51 @@ class parse:
         variables.update({name : result})
 
 
+def showVariable(i):
+    name = parse.varName(i)
+    value = str(variables.get(name))
+    x = 0
+
+    if "." in value:
+        while value[x] != ".":
+            x += 1
+        x += 1
+
+        if value[x] == "0":
+            print(f"{name} = {int(variables.get(name))}")
+            return
+
+    try:
+        print(f"{name} = {variables.get(name)}")
+    except:
+        print(f"Error: variable: {name} does not exist")
+
+
 def shell():
     while True:
         i = input("math> ").lower().strip().replace(" ", "")
 
-        if "=" in i and "(" in i and ")" in i:
-            result = parse.function(i[2:])
-            variables[i[0]] = result
+        if "#" in i  or i == "":
+            pass
+        elif "print" in i:
+            print(unparsedLines[x][6:])
+        elif "=" in i and "(" in i and ")" in i:
+            parse.function(i)
         elif "=" in i:
-            variables.update({i[0] : parse.variable(i)})
+            parse.variable(i)
         elif "(" in i and ")" in i:
             parse.function(i)
-        elif i[0] == ":":
+        elif ":" in i:
             showVariable(i)
         elif "show" in i and "." in i:
             print(variables)
+        elif i == "clear":
+            clear()
         elif i == "quit" or i == "q":
             return
         else:
-            print("Invalid Input")
+            print(f"Invalid Input: At Line {x + 1}")
+            exit(1)
 
 
 def f(filePath):
@@ -343,8 +361,6 @@ def f(filePath):
             print(variables)
         elif i == "clear":
             clear()
-        elif i == "quit" or i == "q":
-            return
         else:
             print(f"Invalid Input: At Line {x + 1}")
             exit(1)
