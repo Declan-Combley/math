@@ -1,0 +1,10 @@
+print This will double the number entered
+
+value = ?
+result = times(value, 2)
+
+clear
+
+:result
+
+print done
