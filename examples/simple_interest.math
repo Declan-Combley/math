@@ -1,18 +1,17 @@
 print principle
-p = ?
+principle = ?
 
 print rate
-r = ?
+rate = ?
 
 print time
-t = ?
+time = ?
 
 clear
 
-i = times(p, r, t)
-i = divide(i, 100)
+interest = times(principle, rate, time)
+interest = divide(interest, 100)
 
-print interest
-:i
+:interest
 
 print done
