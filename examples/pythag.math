@@ -1,5 +1,11 @@
-a = square(2)
-b = square(2)
+print a
+a = ?
+
+print b
+b = ?
+
+a = square(a)
+b = square(b)
 c = add(a, b)
 c = sqrt(c)
 :c

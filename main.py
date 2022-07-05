@@ -231,6 +231,13 @@ class parse:
         return callFunction(name, args)
 
     def variable(i) -> str:
+        if len(i) < 1:
+            print("Error: Invalid Variable Value")
+
+        if i[-1] == "?":
+            value = input(">  ")
+            return value
+
         x = 2
         values = []
 

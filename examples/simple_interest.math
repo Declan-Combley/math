@@ -1,9 +1,16 @@
-p = 100
-r = 3
-t = 4
+print principle
+p = ?
+
+print rate
+r = ?
+
+print time
+t = ?
 
 i = times(p, r, t)
 i = divide(i, 100)
+
+print interest
 :i
 
 print done
