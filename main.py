@@ -12,6 +12,33 @@ def clear():
         _ = system('clear')
 
 
+def power(args):
+    if len(args) != 2:
+        print("Error: exponent only accepts 2 arguments")
+
+    try:
+        value = int(args[0])
+    except ValueError:
+        try:
+            value = float(variables[args[0]])
+        except:
+            value = float(variables[args[0]])
+    except:
+        value = float(variables[args[0]])
+
+    try:
+        exponent = int(args[1])
+    except ValueError:
+        try:
+            exponent = float(variables[args[1]])
+        except:
+            exponent = float(variables[args[1]])
+    except:
+        exponent = float(variables[args[1]])
+
+    return pow(value, exponent)
+
+
 def squareRoot(args):
     if len(args) != 1:
         print("Error: sqrt only accepts 1 argument")
@@ -43,6 +70,7 @@ def square(args):
         value = float(variables[args[0]])
 
     return value * value
+
 
 def add(args) -> int or float:
     if len(args) == 1:
@@ -177,18 +205,20 @@ def display(args):
 def callFunction(name, args):
     result = None
 
-    if name == "add":
+    if name == "add" or name == "+" or name == "addition":
         result = add(args)
-    elif name == "minus":
+    elif name == "minus" or name == "-" or name == "subtract":
         result = minus(args)
-    elif name == "times":
+    elif name == "times" or name == "x" or name == "multiply" or name == "mult":
         result = times(args)
-    elif name == "divide":
+    elif name == "divide" or name == "/":
         result = divide(args)
-    elif name == "sqrt":
+    elif name == "sqrt" or name == "square_root":
         result = squareRoot(args)
-    elif name == "square":
+    elif name == "square" or name == "^2":
         result = square(args)
+    elif name == "exponent" or name == "^" or name == "power" or name  == "pow":
+        result = power(args)
     else:
         print(f"Unknown Function : {name}")
         print(f"Function Args: {args}")
