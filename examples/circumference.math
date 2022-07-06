@@ -1,7 +1,7 @@
 print radius
 r = ?
 
-pi = 3.14
+pi = divide(22, 7)
 cirumference = times(2, pi, r)
 
 clear
