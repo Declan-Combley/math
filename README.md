@@ -36,5 +36,4 @@ squareRoot(...)    - Will return the square root of a singular value
 If you want some examples of how to use this language check out the <a href="https://github.com/Declan-Combley/math/tree/main/examples">example folder</a>.
 
 ## Forewarning
-This language is a work in process and there is little to no error checking.
-So expect to see alot of python errors if you don't do exactly what the language asks in right way.
+This is some of the worst code ever created, dont't use it. 
