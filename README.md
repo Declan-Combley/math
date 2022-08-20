@@ -36,4 +36,4 @@ squareRoot(...)    - Will return the square root of a singular value
 If you want some examples of how to use this language check out the <a href="https://github.com/Declan-Combley/math/tree/main/examples">example folder</a>.
 
 ## Forewarning
-This is some of the worst code ever created, dont't use it. 
+This is some of the worst code ever created, don't use it. 
